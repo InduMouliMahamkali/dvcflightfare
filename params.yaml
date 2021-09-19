@@ -1,0 +1,38 @@
+base:
+  project: flight-fare
+  random_state: 126
+  target_col: Price
+
+data_source:
+  s3_source: original_data/data_original.csv
+
+load_data:
+  raw_dataset_csv: data/raw/data_original.csv
+
+split_data:
+  train_path: data/processed/Data_Train.csv
+  test_path: data/processed/Data_Test.csv
+  test_size: 0.2
+
+estimators:
+  RandomForestRegressor:
+    params:
+      n_estimators: 700
+      min_samples_split: 15
+      min_samples_leaf: 1
+      max_features: 'auto'
+      max_depth: 20
+
+#      n_estimators: 200
+#      min_samples_split: 2
+#      min_samples_leaf: 8
+#      max_features: 'sqrt'
+#      max_depth: 65
+
+model_dir: saved_models
+
+reports:
+  params: report/params.json
+  scores: report/scores.json
+
+webapp_model_dir: prediction_service/model/model.joblib

@@ -1,0 +1,38 @@
+stages:
+  load_data:
+    cmd: python src/load_data.py --config=params.yaml
+    deps:
+      - src/get_data.py
+      - src/load_data.py
+      - original_data/data_original.csv
+    outs:
+      - data/raw/data_original.csv
+
+  split_data:
+    cmd: python src/split_data.py --config=params.yaml
+    deps:
+      - src/split_data.py
+      - data/raw/data_original.csv
+    outs:
+      - data/processed/Data_Train.csv
+      - data/processed/Data_Test.csv
+
+  train_and_evaluate:
+    cmd: python src/train_and_evaluate.py --config=params.yaml
+    deps:
+      - data/processed/Data_Train.csv
+      - data/processed/Data_Test.csv
+      - src/train_and_evaluate.py
+    params:
+      - estimators.RandomForestRegressor.params.n_estimators
+      - estimators.RandomForestRegressor.params.min_samples_split
+      - estimators.RandomForestRegressor.params.min_samples_leaf
+      - estimators.RandomForestRegressor.params.max_features
+      - estimators.RandomForestRegressor.params.max_depth
+    metrics:
+      - report/scores.json:
+          cache: false
+      - report/params.json:
+          cache: false
+    outs:
+      - saved_models/model.joblib

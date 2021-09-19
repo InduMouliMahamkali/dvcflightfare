@@ -1,0 +1,63 @@
+schema: '2.0'
+stages:
+  load_data:
+    cmd: python src/load_data.py --config=params.yaml
+    deps:
+    - path: original_data/data_original.csv
+      md5: 2ebc22a382ef3aada9059fadef829746
+      size: 738444
+    - path: src/get_data.py
+      md5: f157570938d8d8d0d28ae8fdf8b6f318
+      size: 582
+    - path: src/load_data.py
+      md5: ad59efb46c7cdf90fc0585e7d830f51f
+      size: 605
+    outs:
+    - path: data/raw/data_original.csv
+      md5: 735e96b5e932cd72d9d73674ef7e1430
+      size: 738448
+  split_data:
+    cmd: python src/split_data.py --config=params.yaml
+    deps:
+    - path: data/raw/data_original.csv
+      md5: 735e96b5e932cd72d9d73674ef7e1430
+      size: 738448
+    - path: src/split_data.py
+      md5: 759dd5603480299819669e2bc34b20d9
+      size: 966
+    outs:
+    - path: data/processed/Data_Test.csv
+      md5: 86c8826bc586fedfed1efa7090d83443
+      size: 147991
+    - path: data/processed/Data_Train.csv
+      md5: 3ef2bab0ed1947fafd5e9380727a3760
+      size: 590823
+  train_and_evaluate:
+    cmd: python src/train_and_evaluate.py --config=params.yaml
+    deps:
+    - path: data/processed/Data_Test.csv
+      md5: 86c8826bc586fedfed1efa7090d83443
+      size: 147991
+    - path: data/processed/Data_Train.csv
+      md5: 3ef2bab0ed1947fafd5e9380727a3760
+      size: 590823
+    - path: src/train_and_evaluate.py
+      md5: 4caf005d11eb15672696ceb2fa6614da
+      size: 3399
+    params:
+      params.yaml:
+        estimators.RandomForestRegressor.params.max_depth: 20
+        estimators.RandomForestRegressor.params.max_features: auto
+        estimators.RandomForestRegressor.params.min_samples_leaf: 1
+        estimators.RandomForestRegressor.params.min_samples_split: 15
+        estimators.RandomForestRegressor.params.n_estimators: 700
+    outs:
+    - path: report/params.json
+      md5: 46302d8b83cb7958c15025111c2d0c60
+      size: 138
+    - path: report/scores.json
+      md5: 8c5ffa8bae2360971e33a1c4ff88647b
+      size: 98
+    - path: saved_models/model.joblib
+      md5: 98e79fbab4b728ae046a854d5fc27774
+      size: 63296185
