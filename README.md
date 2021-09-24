@@ -1,9 +1,14 @@
 # dvc flightfare implementation
+
+## Intention of this implementation:
+
+<p>The main intention for creating this project is to acquire the knowledge of real time ml project implementation with modular coding standards. Hence, used DVC (data version control) for MLOps and CI/CD pipeline to deploy the model, so that we can keep track of the entire project as stages. </p>
+
 ## Problem Statement:
 
 <p>This project is all about creating an machine learning algorithm, that helps the user to know their flight journey cost by providing the required input. </p>
 
-<p>Although the data provided resembles the real time data, if we can add the advantages of real time data like flight and seats availability, weather, country wise transportation charges we can increase the accuracy of prediction upto 20%-22%. And can make a significant impact on flight bookings. </p>
+<p>Although the data provided resembles the real time data, but if we can add the advantages of real time data like flight and seats availability, weather, country wise transportation charges we can increase the accuracy of prediction upto 20%-22%. And can make a significant impact on flight bookings. </p>
 
 ## Approach
 <p>As the main goal is to predict the fares of the flights based on different factors available in the dataset.</p>
