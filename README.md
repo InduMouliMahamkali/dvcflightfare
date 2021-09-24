@@ -39,5 +39,11 @@
 5. Css
 6. Pandas, Numpy 
 7. Database (Cassandra)
+8. pytest
+9. tox
+10. flake8
+11. gunicorn
+12. dvc (data version control)
+13. mlflow
 
 </pre>
